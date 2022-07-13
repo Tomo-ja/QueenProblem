@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		E5B9F714287C9D6D00F8EDF3 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B9F713287C9D6D00F8EDF3 /* main.swift */; };
+		E5B9F71C287C9DA100F8EDF3 /* Recursion.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B9F71B287C9DA100F8EDF3 /* Recursion.swift */; };
+		E5B9F722287DCFDD00F8EDF3 /* String+DPStringTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B9F721287DCFDD00F8EDF3 /* String+DPStringTool.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,6 +27,9 @@
 /* Begin PBXFileReference section */
 		E5B9F710287C9D6D00F8EDF3 /* SwiftAGDS */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = SwiftAGDS; sourceTree = BUILT_PRODUCTS_DIR; };
 		E5B9F713287C9D6D00F8EDF3 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		E5B9F71B287C9DA100F8EDF3 /* Recursion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recursion.swift; sourceTree = "<group>"; };
+		E5B9F720287CA4DA00F8EDF3 /* story.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = story.txt; sourceTree = "<group>"; };
+		E5B9F721287DCFDD00F8EDF3 /* String+DPStringTool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+DPStringTool.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,9 +62,28 @@
 		E5B9F712287C9D6D00F8EDF3 /* SwiftAGDS */ = {
 			isa = PBXGroup;
 			children = (
+				E5B9F71D287CA07D00F8EDF3 /* Utils */,
+				E5B9F71A287C9D8D00F8EDF3 /* Recursion */,
 				E5B9F713287C9D6D00F8EDF3 /* main.swift */,
 			);
 			path = SwiftAGDS;
+			sourceTree = "<group>";
+		};
+		E5B9F71A287C9D8D00F8EDF3 /* Recursion */ = {
+			isa = PBXGroup;
+			children = (
+				E5B9F71B287C9DA100F8EDF3 /* Recursion.swift */,
+				E5B9F720287CA4DA00F8EDF3 /* story.txt */,
+			);
+			path = Recursion;
+			sourceTree = "<group>";
+		};
+		E5B9F71D287CA07D00F8EDF3 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				E5B9F721287DCFDD00F8EDF3 /* String+DPStringTool.swift */,
+			);
+			path = Utils;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -120,6 +144,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E5B9F722287DCFDD00F8EDF3 /* String+DPStringTool.swift in Sources */,
+				E5B9F71C287C9DA100F8EDF3 /* Recursion.swift in Sources */,
 				E5B9F714287C9D6D00F8EDF3 /* main.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
