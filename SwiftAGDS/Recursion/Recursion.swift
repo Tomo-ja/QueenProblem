@@ -81,36 +81,37 @@ func evaluate(_ expr: String) -> Int {
 	
 	// drop both side of ( )
 	var expr = expr
-	print("\(expr) -- all")
-	if !expr.isEmpty{
-
-	}
-	
 	expr.removeFirst()
 	expr.removeLast()
 	
-	if let (startIndex, endIndex) = evaluateHalperSplit(expr) {
+	if let (startIndex, endIndex) = evaluateHelperSplit(expr) {
 		let childGroup = String(expr[startIndex...endIndex])
 		var frontPart = expr.startIndex == startIndex ? "" : String(expr[...expr.index(before: startIndex)])
 		var endPart = expr.endIndex == endIndex ? "" : String(expr[expr.index(after: endIndex)...])
 		let frontOpe = frontPart.isEmpty ? ""  : String(frontPart.removeLast())
 		let endOpe = endPart.isEmpty ? "" : String(endPart.removeFirst())
-		print("\(frontPart) -- front")
-		print("\(childGroup) -- next")
-		print("\(endPart) -- end")
 		return evaluateHelperCalc("\(frontPart.isEmpty ? "" : String(evaluate(frontPart)))\(frontOpe)\(String(evaluate(childGroup)))\(endOpe)\(endPart.isEmpty ? "" : String(evaluate(endPart)))")
 	} else {
 		return evaluateHelperCalc(expr)
 	}
 }
 
-func evaluateHalperSplit(_ expr: String) -> (startIndex: String.Index, endIndex: String.Index)? {
-	guard let groupEndIndex = expr.firstIndex(of: ")") else { return nil }
-	print(expr)
-	print(expr.count(of: ")"))
-	let frontExpr = expr[...expr.index(before: groupEndIndex)]
-	let groupStartIndex = frontExpr.lastIndex(of: "(")!
-	return (groupStartIndex, groupEndIndex)
+func evaluateHelperSplit(_ expr: String) -> (startIndex: String.Index, endIndex: String.Index)? {
+	guard let _ = expr.firstIndex(of: ")") else { return nil }
+	var count = 0
+	for (index, letter) in expr.enumerated() {
+		if letter == "(" {
+			count += 1
+		} else if letter == ")" {
+			count -= 1
+			if count == 0 {
+				let frontExpr = expr[...expr.index(expr.startIndex, offsetBy: index)]
+				let groupStartIndex = frontExpr.firstIndex(of: "(")!
+				return (groupStartIndex, expr.index(expr.startIndex, offsetBy: index))
+			}
+		}
+	}
+	return nil // never run here
 }
 
 func evaluateHelperCalc(_ expr: String) -> Int {
@@ -125,12 +126,4 @@ func evaluateHelperCalc(_ expr: String) -> Int {
 		return firstNum! * secoundNum!
 	}
 	return 0
-}
-
-extension String {
-	func count(of char: Character) -> Int {
-		return reduce(0) {
-			$1 == char ? $0 + 1 : $0
-		}
-	}
 }
