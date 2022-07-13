@@ -20,8 +20,8 @@ print("Hello, World!")
 
 // MARK: homework 5
 
-print(evaluate("7"))
-print(evaluate("(2+2)"))
+//print(evaluate("7"))
+//print(evaluate("(2+2)"))
 //print(evaluate("(1+(2*4))"))
 //print(evaluate("((1+3)+((1+2)*5))"))
-
+print(evaluate("(((1+2)*5)+(1+3))"))

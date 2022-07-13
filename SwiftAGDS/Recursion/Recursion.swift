@@ -98,7 +98,7 @@ func evaluate(_ expr: String) -> Int {
 		print("\(frontPart) -- front")
 		print("\(childGroup) -- next")
 		print("\(endPart) -- end")
-		return evaluateHelperCalc(String(evaluate(frontPart)) + frontOpe + String(evaluate(childGroup)) + endOpe + String(evaluate(endPart)))
+		return evaluateHelperCalc("\(frontPart.isEmpty ? "" : String(evaluate(frontPart)))\(frontOpe)\(String(evaluate(childGroup)))\(endOpe)\(endPart.isEmpty ? "" : String(evaluate(endPart)))")
 	} else {
 		return evaluateHelperCalc(expr)
 	}
@@ -106,6 +106,8 @@ func evaluate(_ expr: String) -> Int {
 
 func evaluateHalperSplit(_ expr: String) -> (startIndex: String.Index, endIndex: String.Index)? {
 	guard let groupEndIndex = expr.firstIndex(of: ")") else { return nil }
+	print(expr)
+	print(expr.count(of: ")"))
 	let frontExpr = expr[...expr.index(before: groupEndIndex)]
 	let groupStartIndex = frontExpr.lastIndex(of: "(")!
 	return (groupStartIndex, groupEndIndex)
@@ -123,4 +125,12 @@ func evaluateHelperCalc(_ expr: String) -> Int {
 		return firstNum! * secoundNum!
 	}
 	return 0
+}
+
+extension String {
+	func count(of char: Character) -> Int {
+		return reduce(0) {
+			$1 == char ? $0 + 1 : $0
+		}
+	}
 }
