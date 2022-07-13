@@ -98,7 +98,7 @@ func evaluate(_ expr: String) -> Int {
 		print("\(frontPart) -- front")
 		print("\(childGroup) -- next")
 		print("\(endPart) -- end")
-		return evaluateHelperCalc(String(evaluate(frontPart)) + frontOpe + String(evaluate(childGroup)) + endOpe + String(evaluate(endPart)))
+		return evaluateHelperCalc("\(frontPart.isEmpty ? "" : String(evaluate(frontPart)))\(frontOpe)\(String(evaluate(childGroup)))\(endOpe)\(endPart.isEmpty ? "" : String(evaluate(endPart)))")
 	} else {
 		return evaluateHelperCalc(expr)
 	}
