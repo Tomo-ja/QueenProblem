@@ -78,26 +78,33 @@ func evaluate(_ expr: String) -> Int {
 	if expr.count == 1 {
 		return Int(expr)!
 	}
-	
 	// drop both side of ( )
 	var expr = expr
 	expr.removeFirst()
 	expr.removeLast()
 	
-	if let (startIndex, endIndex) = evaluateHelperSplit(expr) {
-		let childGroup = String(expr[startIndex...endIndex])
-		var frontPart = expr.startIndex == startIndex ? "" : String(expr[...expr.index(before: startIndex)])
-		var endPart = expr.endIndex == endIndex ? "" : String(expr[expr.index(after: endIndex)...])
-		let frontOpe = frontPart.isEmpty ? ""  : String(frontPart.removeLast())
-		let endOpe = endPart.isEmpty ? "" : String(endPart.removeFirst())
-		return evaluateHelperCalc("\(frontPart.isEmpty ? "" : String(evaluate(frontPart)))\(frontOpe)\(String(evaluate(childGroup)))\(endOpe)\(endPart.isEmpty ? "" : String(evaluate(endPart)))")
-	} else {
+	// base case
+	guard let (startIndex, endIndex) = evaluateHelperSplit(expr) else {
 		return evaluateHelperCalc(expr)
 	}
+	
+	// recursive case
+	// split into 3parts, only middle part always has something
+	var frontPart = expr.startIndex == startIndex ? "" : expr.getFrontString(by: startIndex).asString()
+	let middlePart = expr[startIndex...endIndex].asString()
+	var endPart = expr.endIndex == endIndex ? "" : expr.getEndString(from: endIndex).asString()
+	
+	// split number part and sign, middle part going to recursion so don't need this step
+	let frontSign = frontPart.isEmpty ? ""  : frontPart.removeLast().asString()
+	let endSign = endPart.isEmpty ? "" : endPart.removeFirst().asString()
+	
+	return evaluateHelperCalc("\(frontPart.isEmpty ? "" : String(evaluate(frontPart)))\(frontSign)\(String(evaluate(middlePart)))\(endSign)\(endPart.isEmpty ? "" : String(evaluate(endPart)))")
 }
 
+// return split points to divide string into 2 groups based on priorty of math
 func evaluateHelperSplit(_ expr: String) -> (startIndex: String.Index, endIndex: String.Index)? {
 	guard let _ = expr.firstIndex(of: ")") else { return nil }
+	// E.g. expected format of expr is "((1+4)*4)+(1+2)"
 	var count = 0
 	for (index, letter) in expr.enumerated() {
 		if letter == "(" {
@@ -105,9 +112,10 @@ func evaluateHelperSplit(_ expr: String) -> (startIndex: String.Index, endIndex:
 		} else if letter == ")" {
 			count -= 1
 			if count == 0 {
-				let frontExpr = expr[...expr.index(expr.startIndex, offsetBy: index)]
+				let groupEndIndex = expr.index(expr.startIndex, offsetBy: index)
+				let frontExpr = expr[...groupEndIndex]
 				let groupStartIndex = frontExpr.firstIndex(of: "(")!
-				return (groupStartIndex, expr.index(expr.startIndex, offsetBy: index))
+				return (groupStartIndex, groupEndIndex)
 			}
 		}
 	}
@@ -115,15 +123,37 @@ func evaluateHelperSplit(_ expr: String) -> (startIndex: String.Index, endIndex:
 }
 
 func evaluateHelperCalc(_ expr: String) -> Int {
+	// E.g. expected format of expr is "4+5"
 	if let addSignIndex =  expr.firstIndex(of: "+") {
-		let firstNum = Int(expr[...expr.index(before: addSignIndex)])
-		let secoundNum = Int(expr[expr.index(after: addSignIndex)...])
+		let firstNum = Int(expr.getFrontString(by: addSignIndex))
+		let secoundNum = Int(expr.getEndString(from: addSignIndex))
 		return firstNum! + secoundNum!
 	}
 	if let multSignIndex = expr.firstIndex(of: "*") {
-		let firstNum = Int(expr[...expr.index(before: multSignIndex)])
-		let secoundNum = Int(expr[expr.index(after: multSignIndex)...])
+		let firstNum = Int(expr.getFrontString(by: multSignIndex))
+		let secoundNum = Int(expr.getEndString(from: multSignIndex))
 		return firstNum! * secoundNum!
 	}
-	return 0
+	return 0 // never run here
+}
+
+extension String {
+	func getFrontString(by index: String.Index) -> String.SubSequence {
+		return self[...self.index(before: index)]
+	}
+	func getEndString(from index: String.Index) -> String.SubSequence {
+		return self[self.index(after: index)...]
+	}
+}
+
+extension Character {
+	func asString() -> String {
+		return String(self)
+	}
+}
+
+extension Substring {
+	func asString() -> String {
+		return String(self)
+	}
 }
