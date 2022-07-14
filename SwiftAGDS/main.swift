@@ -7,8 +7,6 @@
 
 import Foundation
 
-print("Hello, World!")
-
 // MARK: homework 3
 //printBinary(-15)
 //print("")
@@ -20,10 +18,25 @@ print("Hello, World!")
 
 // MARK: homework 5
 
-print(evaluate("7"))
-print(evaluate("(2+2)"))
-print(evaluate("(1+(2*4))"))
-print(evaluate("((1+3)+((1+2)*5))"))
-print(evaluate("(((1+2)*5)+(1+3))"))
-print(evaluate("((4+((1+2)*5))+((1+3)+(1+3)))"))
+//print(evaluate("7"))
+//print(evaluate("(2+2)"))
+//print(evaluate("(1+(2*4))"))
+//print(evaluate("((1+3)+((1+2)*5))"))
+//print(evaluate("(((1+2)*5)+(1+3))"))
+//print(evaluate("((4+((1+2)*5))+((1+3)+(1+3)))"))
 
+// MARK: exhaustive search
+
+//printBinaryExhaustive(2)
+
+//printDecimal(2)
+
+//printPermutation("tom")
+//
+//rollDice(2)
+//rollDiceSum(2, 12)
+
+var board = Board(size: 8)
+
+solve8QueenOneWay(board: &board)
+print(count)
