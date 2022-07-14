@@ -38,5 +38,7 @@ import Foundation
 
 var board = Board(size: 8)
 
-solve8QueenOneWay(board: &board)
+solveQueens(board: &board)
+
+//solve8QueenOneWay(board: &board)
 print(count)

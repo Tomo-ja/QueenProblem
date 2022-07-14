@@ -16,32 +16,25 @@ import Foundation
 /// - Your total recursive calls should not exceed 120 times.
 
 var count = 0
+
 func solveQueens(board: inout Board) {
-	if solveQueensHelper(board: &board, col: 0){
-		print(board)
-	}
+	solveQueensHelper(board: &board, col: 0)
 }
 
-func solveQueensHelper(board: inout Board, col: Int) -> Bool{
+func solveQueensHelper(board: inout Board, col: Int) {
 	count += 1
 	
-	// base case
 	if col >= board.size {
-		return true
+		print(board)
 	}
 	
-	for i in 0..<board.size{
-		if board.isSafe(row: i, col: col){
-			board.place(row: i, col: col)
-			
-			if solveQueensHelper(board: &board, col: col + 1){
-				return true
-			} else {
-				board.remove(row: i, col: col)
-			}
+	for x in 0..<board.size {
+		if board.isSafe(row: x, col: col){
+			board.place(row: x, col: col)
+			solveQueensHelper(board: &board, col: col + 1)
+			board.remove(row: x, col: col)
 		}
 	}
-	return false
 }
 
 //board.isSafe(row: 0, col: 0)
@@ -67,8 +60,10 @@ private func solve8QueenOneWayHelper(board: inout Board, col: Int, nonFilledRows
 	
 	for i in nonFilledRows {
 		if board.isSafe(row: i, col: col){
+			
 			board.place(row: i, col: col)
 			nonFilledRows = nonFilledRows.filter { $0 != i }
+			
 			if solve8QueenOneWayHelper(board: &board, col: col + 1, nonFilledRows: &nonFilledRows){
 				return true
 			} else {
