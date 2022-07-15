@@ -15,17 +15,16 @@ import Foundation
 /// - You are allowed to change the function header (args or return type)
 /// - Your total recursive calls should not exceed 120 times.
 
-var count = 0
+var ways = 0
 
 func solveQueens(board: inout Board) {
 	solveQueensHelper(board: &board, col: 0)
 }
 
-func solveQueensHelper(board: inout Board, col: Int) {
-	count += 1
-	
+private func solveQueensHelper(board: inout Board, col: Int) {
 	if col >= board.size {
 		print(board)
+		ways += 1
 	}
 	
 	for x in 0..<board.size {
@@ -37,11 +36,9 @@ func solveQueensHelper(board: inout Board, col: Int) {
 	}
 }
 
-//board.isSafe(row: 0, col: 0)
-//board.place(row: 0, col: 0)
-//board.remove(row: 0, col: 0)
-
 // MARK: quick way to find one solution
+
+var count = 0
 
 func solve8QueenOneWay(board: inout Board) {
 	var nonFilledRows = [0,1,2,3,4,5,6,7]
